@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 60%;
+            text-align: center;
+        }
+        form {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            margin-bottom: 15px;
+        }
+        img {
+            max-width: 150px;
+            max-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Search</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="image_query">Image query:</label><br>
+            <input type="file" name="image_query" id="image_query"><br><br>
+
+            <label for="text_query">Text query:</label><br>
+            <input type="text" name="text_query" id="text_query" placeholder="Enter text query"><br><br>
+
+            <label for="hybrid_weight">Hybrid Query Weight (λ):</label><br>
+            <input type="number" name="hybrid_weight" id="hybrid_weight" step="0.1" min="0.0" max="1.0" value="0.8"><br><br>
+
+            <label for="use_pca">Use PCA for image query:</label>
+            <input type="checkbox" name="use_pca" id="use_pca"><br><br>
+
+            <label for="n_components">Number of principal components (k):</label><br>
+            <input type="number" name="n_components" id="n_components" value="5" min="1"><br><br>
+
+            <label for="query_type">Select query type:</label><br>
+            <select name="query_type" id="query_type">
+                <option value="image_query">Image query</option>
+                <option value="text_query">Text query</option>
+                <option value="hybrid_query">Hybrid query</option>
+            </select><br><br>
+
+            <button type="submit">Search</button>
+        </form>
+
+        <h2>Top Search Results</h2>
+        <ul>
+            {% for result in results %}
+            <li>
+                <img src="{{ result[0] }}" alt="Image">
+                <p>Similarity score: {{ result[1] }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
