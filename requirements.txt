@@ -1,0 +1,6 @@
+flask
+torch
+torchvision
+pandas
+open-clip-torch
+scikit-learn
